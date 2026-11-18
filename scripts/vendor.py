@@ -4,8 +4,10 @@
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -40,34 +42,64 @@ def sources(spec: dict, checkout: Path) -> list[tuple[Path, str]]:
     return found
 
 
-def sync(name: str, checkout: Path) -> None:
-    manifest = load()
-    spec = manifest["vendors"][name]
-    package = ROOT / "skills" / spec["package"]
-    router = package / "SKILL.md"
-    kept = router.read_bytes() if router.exists() else None
-    if package.exists():
-        shutil.rmtree(package)
-    package.mkdir(parents=True)
-    if kept is not None:
-        router.write_bytes(kept)
+def build(spec: dict, checkout: Path, router: Path, staged: Path) -> None:
+    """Assemble the complete package in staged; raise before touching the tree."""
+    staged.mkdir()
+    if router.exists():
+        shutil.copy2(router, staged / "SKILL.md")
     for origin, relative in sources(spec, checkout):
-        destination = package / relative
+        destination = staged / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         if origin.is_dir():
             shutil.copytree(origin, destination, symlinks=False)
         else:
             shutil.copy2(origin, destination)
     for patch in spec.get("patches", []):
-        target = package / patch["path"]
+        target = staged / patch["path"]
         text = target.read_text()
         if text.count(patch["old"]) != 1:
             raise Refusal("Patch no longer applies: " + patch["path"])
         target.write_text(text.replace(patch["old"], patch["new"]))
     for notice in spec["notice"]:
-        shutil.copy2(checkout / notice, package / "LICENSE")
-    spec["files"] = tree_files(package)
-    MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+        shutil.copy2(checkout / notice, staged / "LICENSE")
+
+
+def write_manifest(manifest: dict, work: Path) -> None:
+    pending = work / "vendor.json"
+    pending.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    os.replace(pending, MANIFEST)
+
+
+def sync(name: str, checkout: Path) -> None:
+    """Replace one vendored package and its pins, or change nothing.
+
+    The new package is built beside the tree and swapped in by rename only
+    after every include, patch and notice succeeded, so a refused or failed
+    sync leaves the vendored package and vendor.json exactly as they were.
+    """
+    manifest = load()
+    spec = manifest["vendors"][name]
+    package = ROOT / "skills" / spec["package"]
+    work = Path(tempfile.mkdtemp(prefix=".vendor-sync-", dir=ROOT))
+    try:
+        staged, previous = work / "package", work / "previous"
+        build(spec, checkout, package / "SKILL.md", staged)
+        spec["files"] = tree_files(staged)
+        if package.exists():
+            package.rename(previous)
+        swapped = False
+        try:
+            staged.rename(package)
+            swapped = True
+            write_manifest(manifest, work)
+        except BaseException:
+            if swapped:
+                package.rename(staged)
+            if previous.exists():
+                previous.rename(package)
+            raise
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
 
 
 def check() -> list[str]:

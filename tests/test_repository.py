@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.support import HANG_GUARD
+from tests.support import HANG_GUARD, tree_state
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -69,6 +69,13 @@ class VendorTests(unittest.TestCase):
     def vendor(self, *args, ok=True):
         return run(self.repo / "scripts/vendor.py", *args, ok=ok)
 
+    def assert_refused_sync_changes_nothing(self):
+        before = tree_state(self.repo)
+        result = self.vendor("sync", "demo", self.upstream, ok=False)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(tree_state(self.repo), before)
+        self.vendor("check")
+
     def test_sync_then_check_passes_and_keeps_the_local_router(self):
         self.vendor("sync", "demo", self.upstream)
         self.vendor("check")
@@ -90,15 +97,17 @@ class VendorTests(unittest.TestCase):
             "(x/README.md)", (self.repo / "skills/demo/tool/SKILL.md").read_text()
         )
         (self.upstream / "skills/tool/SKILL.md").write_text("Upstream moved on\n")
-        self.assertEqual(
-            self.vendor("sync", "demo", self.upstream, ok=False).returncode, 2
-        )
+        self.assert_refused_sync_changes_nothing()
 
-    def test_missing_upstream_path_refuses(self):
+    def test_missing_upstream_path_refuses_without_changing_the_package(self):
+        self.vendor("sync", "demo", self.upstream)
         shutil.rmtree(self.upstream / "skills/tool")
-        self.assertEqual(
-            self.vendor("sync", "demo", self.upstream, ok=False).returncode, 2
-        )
+        self.assert_refused_sync_changes_nothing()
+
+    def test_missing_upstream_notice_refuses_without_changing_the_package(self):
+        self.vendor("sync", "demo", self.upstream)
+        (self.upstream / "LICENSE").unlink()
+        self.assert_refused_sync_changes_nothing()
 
 
 if __name__ == "__main__":
