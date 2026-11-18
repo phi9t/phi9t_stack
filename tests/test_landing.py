@@ -7,9 +7,10 @@ import signal
 import subprocess
 import sys
 import tempfile
-import time
 import unittest
 from pathlib import Path
+
+from tests.support import HANG_GUARD, process_gone, wait_for
 
 CLI = Path(
     os.environ.get(
@@ -48,7 +49,7 @@ class LandingTests(unittest.TestCase):
             text=True,
             capture_output=True,
             check=True,
-            timeout=20,
+            timeout=HANG_GUARD,
         ).stdout.strip()
 
     def cli(self, *args, ok=True):
@@ -56,7 +57,7 @@ class LandingTests(unittest.TestCase):
             [sys.executable, str(CLI), "--repo", str(self.repo), *args],
             text=True,
             capture_output=True,
-            timeout=30,
+            timeout=HANG_GUARD,
         )
         if ok:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -64,7 +65,7 @@ class LandingTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0, result.stdout)
         return json.loads(result.stdout)
 
-    def initialize(self, timeout=5):
+    def initialize(self, timeout=HANG_GUARD):
         return self.cli(
             "init",
             "--acknowledge-local-landing",
@@ -199,7 +200,7 @@ class LandingTests(unittest.TestCase):
         self.assertEqual(self.cli("status")["items"][0]["status"], "landed")
 
     def test_timeout_blocks_and_preserves_mainline(self):
-        self.oracle.write_text("import time\ntime.sleep(5)\n")
+        self.oracle.write_text("import time\ntime.sleep(60)\n")
         self.initialize(timeout=0.2)
         self.submit("a")
         self.cli("run", ok=False)
@@ -253,35 +254,40 @@ class LandingTests(unittest.TestCase):
         self.assertEqual(self.git("rev-parse", "HEAD"), self.base)
 
     def run_and_interrupt_git(self, command, phase):
+        """Kill the integrator while one selected git call is parked.
+
+        The fake git records its pid and parks on a release file, so the kill
+        lands at a known point. The test then releases it and waits for that
+        orphaned child to exit before inspecting the repository.
+        """
         actual_git = shutil.which("git")
-        marker, done = self.root / "phase", self.root / "git-done"
+        marker, release = self.root / "parked", self.root / "release"
         tools = self.root / "bin"
         tools.mkdir()
+        if phase == "submission":
+            select = "selected='update-ref' in args and 'refs/phi9t-land/a/v1' in args"
+        else:
+            select = "selected='merge' in args and '--ff-only' in args"
+        park = (
+            "if selected:\n"
+            f" pathlib.Path({str(marker)!r}).write_text(str(os.getpid()))\n"
+            f" deadline=time.monotonic()+{HANG_GUARD}\n"
+            f" while not pathlib.Path({str(release)!r}).exists():\n"
+            "  assert time.monotonic()<deadline\n"
+            "  time.sleep(0.01)\n"
+        )
+        real_git = f"result=subprocess.run([{actual_git!r},*args],env=os.environ)\n"
+        if phase == "before":
+            body = park + " sys.exit(1)\n" + real_git
+        else:
+            body = real_git + park
         wrapper = tools / "git"
         wrapper.write_text(
             f"#!{sys.executable}\n"
             "import os,pathlib,subprocess,sys,time\nargs=sys.argv[1:]\n"
-            "selected=('merge' in args and '--ff-only' in args)\n"
-            + (
-                "selected='update-ref' in args and 'refs/phi9t-land/a/v1' in args\n"
-                if phase == "submission"
-                else ""
-            )
-            + (
-                f"if selected:\n pathlib.Path({str(marker)!r}).write_text('before')\n"
-                " time.sleep(1)\n"
-                f" pathlib.Path({str(done)!r}).write_text('done')\n sys.exit(1)\n"
-                if phase == "before"
-                else ""
-            )
-            + f"result=subprocess.run([{actual_git!r},*args],env=os.environ)\n"
-            + (
-                f"if selected:\n pathlib.Path({str(marker)!r}).write_text('after')\n"
-                " time.sleep(1)\n"
-                f" pathlib.Path({str(done)!r}).write_text('done')\n"
-                if phase != "before"
-                else ""
-            )
+            + select
+            + "\n"
+            + body
             + "sys.exit(result.returncode)\n"
         )
         wrapper.chmod(0o755)
@@ -293,17 +299,12 @@ class LandingTests(unittest.TestCase):
             stderr=subprocess.PIPE,
         )
         self.addCleanup(lambda: process.poll() is None and process.kill())
-        deadline = time.monotonic() + 15
-        while not marker.exists() and time.monotonic() < deadline:
-            time.sleep(0.02)
-        self.assertTrue(marker.exists())
+        wait_for(lambda: marker.exists() and marker.read_text(), "git to park")
+        parked = int(marker.read_text())
         os.kill(process.pid, signal.SIGKILL)
-        process.communicate(timeout=15)
-        deadline = time.monotonic() + 10
-        while not done.exists() and time.monotonic() < deadline:
-            time.sleep(0.02)
-        self.assertTrue(done.exists())
-        time.sleep(0.05)
+        process.communicate(timeout=HANG_GUARD)
+        release.write_text("go")
+        wait_for(lambda: process_gone(parked), "the orphaned git call to exit")
 
     def test_death_after_git_reconciles_without_duplicate_commits(self):
         self.initialize()
@@ -352,7 +353,7 @@ class LandingTests(unittest.TestCase):
             "import pathlib,subprocess,sys\nroot=sys.argv[1]\n"
             "pathlib.Path(root,'a.txt').write_text('wrong\\n')\n"
             "subprocess.run(['git','add','a.txt'],cwd=root,check=True)\n"
-            "subprocess.run(['git','-c','core.hooksPath=/dev/null','commit',"
+            "subprocess.run(['git','commit',"
             "'-m','tamper'],cwd=root,check=True)\n"
         )
         self.initialize()
@@ -385,12 +386,12 @@ class LandingTests(unittest.TestCase):
             "import pathlib,time\n"
             f"pathlib.Path({str(marker)!r}).write_text('started')\n"
             f"release=pathlib.Path({str(release)!r})\n"
-            "deadline=time.monotonic()+10\n"
+            f"deadline=time.monotonic()+{HANG_GUARD}\n"
             "while not release.exists() and time.monotonic()<deadline:\n"
-            " time.sleep(.02)\n"
+            " time.sleep(.01)\n"
             "assert release.exists()\n"
         )
-        self.initialize(timeout=15)
+        self.initialize()
         self.submit("a")
         process = subprocess.Popen(
             [sys.executable, str(CLI), "--repo", str(self.repo), "run", "--id", "a"],
@@ -399,10 +400,7 @@ class LandingTests(unittest.TestCase):
             stderr=subprocess.PIPE,
         )
         self.addCleanup(lambda: process.poll() is None and process.kill())
-        deadline = time.monotonic() + 15
-        while not marker.exists() and time.monotonic() < deadline:
-            time.sleep(0.02)
-        self.assertTrue(marker.exists())
+        wait_for(marker.exists, "the checker to start")
         return process, release
 
     def test_direct_and_queued_runners_share_one_lane(self):
@@ -413,7 +411,7 @@ class LandingTests(unittest.TestCase):
         self.assertIn("owns", denied["reason"])
         self.assertEqual(self.git("rev-parse", "HEAD"), self.base)
         release.write_text("go")
-        output, errors = process.communicate(timeout=20)
+        output, errors = process.communicate(timeout=HANG_GUARD)
         self.assertEqual(process.returncode, 0, output + errors)
         self.assertEqual((self.repo / "a.txt").read_text(), "A\n")
 
@@ -424,7 +422,7 @@ class LandingTests(unittest.TestCase):
         self.git("commit", "-m", "External writer moved mainline")
         moved = self.git("rev-parse", "HEAD")
         release.write_text("go")
-        output, errors = process.communicate(timeout=20)
+        output, errors = process.communicate(timeout=HANG_GUARD)
         self.assertEqual(process.returncode, 1, output + errors)
         self.assertEqual(self.git("rev-parse", "HEAD"), moved)
         self.assertFalse((self.repo / "a.txt").exists())
@@ -540,13 +538,14 @@ class LandingTests(unittest.TestCase):
         self.assertEqual(note.read_text(), "keep me\n")
 
     def test_killed_integrator_cannot_be_silently_retried(self):
-        marker = self.root / "checking"
-        done = self.root / "done"
+        marker, release = self.root / "checking", self.root / "release"
         self.oracle.write_text(
-            "import pathlib,time\n"
-            f"pathlib.Path({str(marker)!r}).write_text('started')\n"
-            "time.sleep(1.5)\n"
-            f"pathlib.Path({str(done)!r}).write_text('finished')\n"
+            "import os,pathlib,time\n"
+            f"pathlib.Path({str(marker)!r}).write_text(str(os.getpid()))\n"
+            f"deadline=time.monotonic()+{HANG_GUARD}\n"
+            f"while not pathlib.Path({str(release)!r}).exists():\n"
+            " assert time.monotonic()<deadline\n"
+            " time.sleep(0.01)\n"
         )
         self.initialize()
         self.submit("a")
@@ -557,18 +556,13 @@ class LandingTests(unittest.TestCase):
             text=True,
         )
         self.addCleanup(lambda: process.poll() is None and process.kill())
-        deadline = time.monotonic() + 10
-        while not marker.exists() and time.monotonic() < deadline:
-            time.sleep(0.02)
-        self.assertTrue(marker.exists())
+        wait_for(lambda: marker.exists() and marker.read_text(), "the checker to start")
+        checker = int(marker.read_text())
         os.kill(process.pid, signal.SIGKILL)
-        process.communicate(timeout=10)
+        process.communicate(timeout=HANG_GUARD)
         self.cli("run", ok=False)
-        deadline = time.monotonic() + 10
-        while not done.exists() and time.monotonic() < deadline:
-            time.sleep(0.02)
-        self.assertTrue(done.exists())
-        time.sleep(0.05)
+        release.write_text("go")
+        wait_for(lambda: process_gone(checker), "the orphaned checker to exit")
         recovered = self.cli("recover", "--stopped")
         self.assertEqual(recovered["status"], "blocked")
         self.assertEqual(self.git("rev-parse", "HEAD"), self.base)

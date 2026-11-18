@@ -12,6 +12,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from scripts.release import MAX_ARCHIVE
+from tests.support import HANG_GUARD
+
 ROOT = Path(__file__).resolve().parents[1]
 CLI = ROOT / "scripts/release.py"
 
@@ -23,34 +26,22 @@ class ReleaseTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.repo = self.root / "repo"
         self.repo.mkdir()
-        # Release behavior does not depend on vendored upstream trees; the full
-        # catalog is installed once in test_repository instead.
-        shutil.copytree(
-            ROOT / "skills",
-            self.repo / "skills",
-            ignore=lambda folder, names: [
-                name for name in names if name in ("phi9t-pstack", "phi9t-pocock")
-            ],
-        )
+        self.write_catalog()
         (self.repo / "scripts").mkdir()
         for name in ("stack.py", "install.sh", "release.py", "vendor.py"):
             shutil.copy2(ROOT / "scripts" / name, self.repo / "scripts" / name)
-        for name in (
-            "docs/provenance.md",
-            "docs/release-bundle.md",
-            "legacy.json",
-            "vendor.json",
-        ):
-            target = self.repo / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(ROOT / name, target)
+        (self.repo / "docs").mkdir()
+        (self.repo / "docs/provenance.md").write_text("Fixture provenance\n")
+        (self.repo / "docs/release-bundle.md").write_text("Fixture bundle notes\n")
+        (self.repo / "legacy.json").write_text('{"schema": 1, "files": {}}\n')
+        (self.repo / "vendor.json").write_text('{"vendors": {}}\n')
         # These are controlled two-version fixtures, independent of the next
         # real release selected by the source checkout's VERSION.
         (self.repo / "VERSION").write_text("0.1.0-rc.1\n")
         (self.repo / "releases").mkdir()
         (self.repo / "releases/0.1.0-rc.1.md").write_text("First candidate\n")
         private = self.repo / "docs/research/private.md"
-        private.parent.mkdir()
+        private.parent.mkdir(parents=True)
         private.write_text("DO NOT DISTRIBUTE THIS RESEARCH\n")
         self.git("init", "-b", "main")
         self.git("config", "user.name", "Release test")
@@ -68,13 +59,28 @@ class ReleaseTests(unittest.TestCase):
         self.git("commit", "-m", "Release source")
         self.commit = self.git("rev-parse", "HEAD")
 
+    def write_catalog(self):
+        """A minimal valid catalog: one method plus the landing helper qualify runs."""
+        for name, body in (
+            ("phi9t", "Fixture router."),
+            ("phi9t-land", "Fixture landing method."),
+        ):
+            package = self.repo / "skills" / name
+            package.mkdir(parents=True)
+            (package / "SKILL.md").write_text(
+                f'---\nname: {name}\ndescription: "{body}"\n---\n# {name}\n'
+            )
+        driver = self.repo / "skills/phi9t-land/scripts/land.py"
+        driver.parent.mkdir()
+        shutil.copy2(ROOT / "skills/phi9t-land/scripts/land.py", driver)
+
     def git(self, *args):
         return subprocess.run(
             ["git", "-C", str(self.repo), *args],
             text=True,
             capture_output=True,
             check=True,
-            timeout=60,
+            timeout=HANG_GUARD,
         ).stdout.strip()
 
     def cli(self, *args, ok=True):
@@ -82,7 +88,7 @@ class ReleaseTests(unittest.TestCase):
             [sys.executable, str(CLI), *args],
             text=True,
             capture_output=True,
-            timeout=40,
+            timeout=HANG_GUARD,
         )
         self.assertEqual(result.returncode == 0, ok, result.stdout + result.stderr)
         return json.loads(result.stdout)
@@ -314,7 +320,7 @@ class ReleaseTests(unittest.TestCase):
                 input=original + b"\nREPLACEMENT CONTENT\n",
                 capture_output=True,
                 check=True,
-                timeout=15,
+                timeout=HANG_GUARD,
             )
             .stdout.decode()
             .strip()
@@ -377,7 +383,7 @@ class ReleaseTests(unittest.TestCase):
                 text=True,
                 capture_output=True,
                 check=True,
-                timeout=15,
+                timeout=HANG_GUARD,
             )
             return json.loads(result.stdout)
 
@@ -421,7 +427,7 @@ class ReleaseTests(unittest.TestCase):
                         argv,
                         text=True,
                         capture_output=True,
-                        timeout=15,
+                        timeout=HANG_GUARD,
                     )
                     self.assertEqual(result.returncode, 1)
                     self.assertEqual(result.stderr, "")
@@ -434,7 +440,7 @@ class ReleaseTests(unittest.TestCase):
 
     def test_oversized_compressed_payload_and_nonobject_manifest_refuse(self):
         bomb = self.root / "oversized.tar.gz"
-        bomb.write_bytes(gzip.compress(b"x" * (40 * 1024 * 1024), mtime=0))
+        bomb.write_bytes(gzip.compress(b"x" * (MAX_ARCHIVE + 1), mtime=0))
         self.cli("verify", "--archive", str(bomb), ok=False)
         release = self.build()
 

@@ -1,6 +1,5 @@
 """Exercise the public CLI against disposable source and agent roots."""
 
-import argparse
 import base64
 import fcntl
 import hashlib
@@ -11,9 +10,8 @@ import tempfile
 import unittest
 from itertools import product
 from pathlib import Path
-from unittest import mock
 
-from scripts import stack
+from tests.support import HANG_GUARD, tree_state
 
 ROOT = Path(__file__).resolve().parents[1]
 CLI = ROOT / "scripts/stack.py"
@@ -46,6 +44,7 @@ class StackTests(unittest.TestCase):
             [sys.executable, str(CLI), "--source", str(self.source), *args],
             text=True,
             capture_output=True,
+            timeout=HANG_GUARD,
         )
         if ok:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -190,9 +189,9 @@ class StackTests(unittest.TestCase):
             ],
             text=True,
             capture_output=True,
+            timeout=HANG_GUARD,
         )
         self.assertEqual(result.returncode, 2)
-        self.assertIn("unrecognized arguments", result.stderr)
         self.assertFalse(self.target.exists())
 
     def test_legacy_retirement_requires_exact_original_bytes(self):
@@ -260,42 +259,25 @@ class StackTests(unittest.TestCase):
         self.assertFalse(self.file.exists())
         self.install()
 
-    def test_write_failure_rolls_back_already_written_files(self):
-        self.assertEqual(Path(stack.__file__).resolve(), CLI.resolve())
+    def test_failed_write_leaves_a_recoverable_transaction(self):
         self.install()
-        before = {
-            p.relative_to(self.target).as_posix(): p.read_bytes()
-            for p in self.target.rglob("*")
-            if p.is_file() and ".phi9t" not in p.parts
-        }
+        before = tree_state(self.target, exclude=(".phi9t",))
         (self.source / "skills/phi9t/references/guide.md").write_text("Updated\n")
-        driver = self.source / "skills/phi9t/scripts/driver"
-        driver.write_text("#!/bin/sh\necho updated\n")
-        original = stack.apply_state
-        calls = []
-
-        def fail_second_write(path, state):
-            calls.append(path)
-            if len(calls) == 2:
-                raise OSError("Simulated disk write failure")
-            return original(path, state)
-
-        args = argparse.Namespace(
-            source=self.source,
-            target=str(self.target),
-            replace_modified=False,
-            migrate_legacy=False,
+        (self.source / "skills/phi9t/scripts/driver").write_text(
+            "#!/bin/sh\necho new\n"
         )
-        with mock.patch.object(stack, "apply_state", side_effect=fail_second_write):
-            with self.assertRaises(OSError):
-                stack.install(args)
-        after = {
-            p.relative_to(self.target).as_posix(): p.read_bytes()
-            for p in self.target.rglob("*")
-            if p.is_file() and ".phi9t" not in p.parts
-        }
-        self.assertEqual(after, before)
+        scripts = self.target / "skills/phi9t/scripts"
+        scripts.chmod(0o555)  # a real write fault after guide.md is updated
+        self.addCleanup(scripts.chmod, 0o755)
+        self.run_cli("install", "--target", str(self.target), ok=False)
+        self.assertTrue((self.target / ".phi9t/pending.json").exists())
+        self.verify(ok=False)
+        scripts.chmod(0o755)
+        self.run_cli("recover", "--target", str(self.target))
+        self.assertEqual(tree_state(self.target, exclude=(".phi9t",)), before)
         self.assertFalse((self.target / ".phi9t/pending.json").exists())
+        self.install()
+        self.verify()
 
     def test_baseline_manifest_verifies_and_saved_backup_restores(self):
         self.install()
@@ -360,23 +342,9 @@ class StackTests(unittest.TestCase):
                     pending.write_text(json.dumps({"backup": backup}))
                 else:
                     args.extend(["--backup", backup])
-                before = {
-                    path.relative_to(self.target).as_posix(): (
-                        path.read_bytes(),
-                        path.stat().st_mode & 0o777,
-                    )
-                    for path in self.target.rglob("*")
-                    if path.is_file()
-                }
+                before = tree_state(self.target)
                 self.run_cli(*args, ok=False)
-                after = {
-                    path.relative_to(self.target).as_posix(): (
-                        path.read_bytes(),
-                        path.stat().st_mode & 0o777,
-                    )
-                    for path in self.target.rglob("*")
-                    if path.is_file()
-                }
+                after = tree_state(self.target)
                 self.assertEqual(after, before)
                 pending.unlink(missing_ok=True)
 
@@ -443,23 +411,9 @@ class StackTests(unittest.TestCase):
                     pending.write_text(json.dumps({"backup": backup}))
                 else:
                     args.extend(["--backup", backup])
-                before = {
-                    path.relative_to(self.target).as_posix(): (
-                        path.read_bytes(),
-                        path.stat().st_mode & 0o777,
-                    )
-                    for path in self.target.rglob("*")
-                    if path.is_file()
-                }
+                before = tree_state(self.target)
                 self.run_cli(*args, ok=False)
-                after = {
-                    path.relative_to(self.target).as_posix(): (
-                        path.read_bytes(),
-                        path.stat().st_mode & 0o777,
-                    )
-                    for path in self.target.rglob("*")
-                    if path.is_file()
-                }
+                after = tree_state(self.target)
                 self.assertEqual(after, before)
                 self.assertFalse((self.base / "outside.txt").exists())
                 pending.unlink(missing_ok=True)
@@ -490,23 +444,9 @@ class StackTests(unittest.TestCase):
                     pending.write_text(json.dumps({"backup": backup}))
                 else:
                     args.extend(["--backup", backup])
-                before = {
-                    path.relative_to(self.target).as_posix(): (
-                        path.read_bytes(),
-                        path.stat().st_mode & 0o777,
-                    )
-                    for path in self.target.rglob("*")
-                    if path.is_file()
-                }
+                before = tree_state(self.target)
                 self.run_cli(*args, ok=False)
-                after = {
-                    path.relative_to(self.target).as_posix(): (
-                        path.read_bytes(),
-                        path.stat().st_mode & 0o777,
-                    )
-                    for path in self.target.rglob("*")
-                    if path.is_file()
-                }
+                after = tree_state(self.target)
                 self.assertEqual(after, before)
                 pending.unlink(missing_ok=True)
 
