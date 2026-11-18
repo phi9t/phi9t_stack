@@ -1,0 +1,88 @@
+{
+  "archive_sha256": "6b8e5f77c62b9ed89b6c22182fd61831b1af5881bd33bd9cd9b0f6d5fcedb689",
+  "assets": {
+    "RELEASE-NOTES.md": {
+      "bytes": 1574,
+      "sha256": "e15906316aaa5f3ff4190ec0e7e7adf61a29b57c26543877cdd267f5a7711024"
+    },
+    "SHA256SUMS": {
+      "bytes": 96,
+      "sha256": "af5d0b811da2f9b5aaafec04ac4827c9c91983ca34c3cfb758a254ba401d7bea"
+    },
+    "VERIFICATION.json": {
+      "bytes": 1166,
+      "sha256": "915aafdc9a6f5f3f7fa37c556f3cce4d667bcd820f9687decbb3167740078735"
+    },
+    "phi9t_stack-0.1.0-rc.7.tar.gz": {
+      "bytes": 254718,
+      "sha256": "6b8e5f77c62b9ed89b6c22182fd61831b1af5881bd33bd9cd9b0f6d5fcedb689"
+    },
+    "qualification.json": {
+      "bytes": 2133,
+      "sha256": "feffadf94f6ca14b7ca156749e111325e399a38c26f0e04911ccff91dec0728e"
+    },
+    "release.json": {
+      "bytes": 35456,
+      "sha256": "5c3c824dc455668c2f66c4d8c07130589e2a68cc867449e0f74c89625557a5f7"
+    }
+  },
+  "download_integrity": {
+    "all_equal": true,
+    "assets_compared": 6
+  },
+  "installation": {
+    "backup_ids": "Retained in local installer state and private rollout receipt.",
+    "files_per_root": 197,
+    "repeat_install": "unchanged",
+    "roots": [
+      "~/.agents",
+      "~/.claude"
+    ]
+  },
+  "limits": [
+    "Prerelease, not full dogfood acceptance",
+    "No complete fresh behavioral trial of all 86 native and vendor entrypoint files",
+    "Existing 14 disabled native methods remain disabled in live Codex/TRAE profiles",
+    "Modified legacy TRAE flat commands preserved",
+    "No remote-machine, Linux or Windows rollout qualification",
+    "The separate router/worker-role redesign is not included"
+  ],
+  "prerelease": true,
+  "qualification": {
+    "receipt": "qualification.json",
+    "receipt_paths_redacted": true,
+    "status": "qualified"
+  },
+  "release_url": "https://github.com/phi9t/phi9t_stack/releases/tag/v0.1.0-rc.7",
+  "reproducible_builds": 2,
+  "runtime_discovery": {
+    "claude": {
+      "discovered": 17,
+      "probe": "CLI initialization; tools and MCP servers disabled for this probe",
+      "version": "2.1.327"
+    },
+    "codex": {
+      "discovered": 17,
+      "enabled": 3,
+      "errors": [],
+      "existing_enablement_preserved": true
+    },
+    "trae": {
+      "discovered": 17,
+      "enabled": 3,
+      "errors": [],
+      "existing_enablement_preserved": true
+    }
+  },
+  "source_commit": "3e82d90d6ed7992793451f8a1982b4ee760c4020",
+  "source_gate": {
+    "candidate": "3e82d90d6ed7992793451f8a1982b4ee760c4020",
+    "command": "uv sync --locked; ./scripts/verify.sh",
+    "guarded_landing": "publish-rc7",
+    "status": "passed",
+    "tests": 69
+  },
+  "source_tree": "f0b649ba0bb05bc5abb0cd502408b9129aa1e4d5",
+  "tag": "v0.1.0-rc.7",
+  "version": "0.1.0-rc.7"
+}
