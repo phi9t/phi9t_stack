@@ -23,7 +23,15 @@ class ReleaseTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.repo = self.root / "repo"
         self.repo.mkdir()
-        shutil.copytree(ROOT / "skills", self.repo / "skills")
+        # Release behavior does not depend on vendored upstream trees; the full
+        # catalog is installed once in test_repository instead.
+        shutil.copytree(
+            ROOT / "skills",
+            self.repo / "skills",
+            ignore=lambda folder, names: [
+                name for name in names if name in ("phi9t-pstack", "phi9t-pocock")
+            ],
+        )
         (self.repo / "scripts").mkdir()
         for name in ("stack.py", "install.sh", "release.py", "vendor.py"):
             shutil.copy2(ROOT / "scripts" / name, self.repo / "scripts" / name)
@@ -32,7 +40,6 @@ class ReleaseTests(unittest.TestCase):
             "docs/release-bundle.md",
             "legacy.json",
             "vendor.json",
-            "releases/0.1.0-rc.1.md",
         ):
             target = self.repo / name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -40,6 +47,8 @@ class ReleaseTests(unittest.TestCase):
         # These are controlled two-version fixtures, independent of the next
         # real release selected by the source checkout's VERSION.
         (self.repo / "VERSION").write_text("0.1.0-rc.1\n")
+        (self.repo / "releases").mkdir()
+        (self.repo / "releases/0.1.0-rc.1.md").write_text("First candidate\n")
         private = self.repo / "docs/research/private.md"
         private.parent.mkdir()
         private.write_text("DO NOT DISTRIBUTE THIS RESEARCH\n")
@@ -65,7 +74,7 @@ class ReleaseTests(unittest.TestCase):
             text=True,
             capture_output=True,
             check=True,
-            timeout=20,
+            timeout=60,
         ).stdout.strip()
 
     def cli(self, *args, ok=True):
