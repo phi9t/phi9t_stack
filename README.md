@@ -51,7 +51,15 @@ legibility, and Unix composition with durable coordination where needed.
 
 ## Check and install
 
-For a versioned bundle, see [releases](docs/releases.md). Releases identify the
+Download published bundles and checksums from
+[GitHub Releases](https://github.com/phi9t/phi9t_stack/releases). Select an explicit
+version, including its prerelease label, and follow the bundled instructions.
+Codex and TRAE can share `~/.agents`; install the same bundle separately into
+`~/.claude` for Claude Code. Verify each target, retain its backup identity and
+start a fresh session to check discovery. Existing skill enablement is preserved.
+
+For the qualification and rollback procedure, see [releases](docs/releases.md).
+Releases identify the
 exact source commit, include file hashes and modes, and exercise the actual
 bundled installer before promotion. Local checkout installation remains supported.
 

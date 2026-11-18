@@ -14,6 +14,12 @@ python scripts/stack.py install --target "$HOME/.agents"
 python scripts/stack.py verify --target "$HOME/.agents"
 ```
 
+Codex and TRAE can share the `~/.agents` installation when their runtime
+actually discovers it. For Claude Code, install and verify the same bundle
+separately with `--target "$HOME/.claude"`. These are separate reversible
+transactions; retain both backup identities. Keep existing skill enablement
+settings and unrelated user files intact.
+
 Refresh runtime skill discovery after installation;
 file verification alone does not establish runtime discovery or instruction quality.
 
