@@ -1,0 +1,24 @@
+[project]
+name = "phi9t-stack-dev"
+# Development workspace metadata. VERSION owns release identities.
+version = "0.0.0"
+requires-python = ">=3.9"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff==0.17.3",
+    "shellcheck-py==0.11.0.1",
+    "ty==0.0.94",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.7.8"
+
+[tool.ruff]
+target-version = "py39"
+extend-exclude = ["docs/research"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "PLC0415"]

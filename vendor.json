@@ -1,0 +1,488 @@
+{
+  "vendors": {
+    "pocock": {
+      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "files": {
+        "LICENSE": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+        "engineering/ask-matt/PHASE-BOUNDARIES.md": "a8aa20158609ef39e2b308b6ba0660c91066838d07a867202e63a7744a88a3ed",
+        "engineering/ask-matt/SKILL.md": "1371f5ce005de0992a44b137748bfb960a56948aa9871b405fe9d90b24332e3c",
+        "engineering/ask-matt/agents/openai.yaml": "bdffbc5a0a99ed1b6ef3253d251d755fd18162b9845972e380007f844b09b05c",
+        "engineering/code-review/SKILL.md": "9c921a8d88138a41401d8897ca1bb852088ab1b7b605cdd04edc13e3e8aab6dd",
+        "engineering/code-review/agents/openai.yaml": "8229ca854e11dc8e6aef2131ee03f31fb1561cf905fab9ccc325180cf3331352",
+        "engineering/codebase-design/DEEPENING.md": "f3dd099ce99289bd213914d8ee3e2429b78309c3957ca4583f7659551b1d53c1",
+        "engineering/codebase-design/DESIGN-IT-TWICE.md": "c222ab5a82e0405672eb9062d62496139a08828e45d07fc5f18e4952c10fac1a",
+        "engineering/codebase-design/SKILL.md": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+        "engineering/codebase-design/agents/openai.yaml": "edebc9e4fcfe102114012575eaa9600b9b5fd08c311664f389c36e7bc717740f",
+        "engineering/diagnosing-bugs/SKILL.md": "849198df88cdb65fd0d97236604c1fca7ff2f22d2f705f9724a800d0266b118d",
+        "engineering/diagnosing-bugs/agents/openai.yaml": "3e430dbe4334a87597488c060cb3dc3786bb00c9182877d6f5ec41f62490e90b",
+        "engineering/diagnosing-bugs/scripts/hitl-loop.template.sh": "35103539fc36873eea36074769ad454f9379d6fc8b2dc0e26ce987fd3bfe5503",
+        "engineering/domain-modeling/ADR-FORMAT.md": "944c92aa790e8fbdc9199640b170979abb8a34ba8d0fe18c2a01a63bce140ca0",
+        "engineering/domain-modeling/GLOSSARY-FORMAT.md": "21dcc40cdec8e151a829b98ab1517c1867bc444e3665134a98c6983411996801",
+        "engineering/domain-modeling/SKILL.md": "7b925d7b1e341a2eeae33ad68a8a8c0ab889a38ddd22a7598e4c240e5a7556a3",
+        "engineering/domain-modeling/agents/openai.yaml": "f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b",
+        "engineering/grill-with-docs/SKILL.md": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
+        "engineering/grill-with-docs/agents/openai.yaml": "94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9",
+        "engineering/implement-spec/SKILL.md": "1993a473cec40ac85d081c112cdffdc63ec3267c2e412055ad09e013a2f623d1",
+        "engineering/implement-spec/agents/openai.yaml": "fd41efb42c60c96320d6531be7e4bf15cbf5518cd652d57dff27ccffa46988e9",
+        "engineering/implement/SKILL.md": "483bdc4ccf4ac31d86ac7beeaa0d0db80313e71e120bb8c59b3196ae5decd53d",
+        "engineering/implement/agents/openai.yaml": "8970a8596ade0c28ab427f41a4ea242d6bdf6186c59ebf55e1238dbecaab79dc",
+        "engineering/improve-codebase-architecture/HTML-REPORT.md": "581e8bb5a521e46bbda8ca7e19b15948bed882187108092ebb90c62513b77528",
+        "engineering/improve-codebase-architecture/SKILL.md": "35b03a3db61e0f5aa333ea59b54963e45a3d2ace6649b2ef4f9576603e2582a6",
+        "engineering/improve-codebase-architecture/agents/openai.yaml": "c8cb20f68ebf0edb4e497bc11ae5fcaa196004e661cd189015b04f4109ced7f1",
+        "engineering/pr/CREDITS.md": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497",
+        "engineering/pr/SKILL.md": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd",
+        "engineering/pr/agents/openai.yaml": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+        "engineering/prototype/LOGIC.md": "f61c7d249e786a79ef289018901c348271e1798dd0b0bc5607b5c6f4d4a01ab9",
+        "engineering/prototype/SKILL.md": "714de632d116bb73f65cdb5a882db15b9369a6713b9a47c0fad827848f0bfbe3",
+        "engineering/prototype/UI.md": "723211e878acbc7b6ff09755263f3295cde724ba902ff0064da41eed51d45ad3",
+        "engineering/prototype/agents/openai.yaml": "5af65e43ab41a350436697b81e27b7f848d36782043b73c322bb2c9fa9cc55dc",
+        "engineering/research/SKILL.md": "1f629e18ab899412683bc6a1c4efb4339999e27c2fdac328f26ee10a8c031d33",
+        "engineering/research/agents/openai.yaml": "9b4c470d63221c1f68f22df70b83e2f12401b317babe0d1b7b5f24a974474d0d",
+        "engineering/retro/SKILL.md": "33fbc28568e3146f20fd908b12998bc0ab30aa4f4c87288199a40793efa94696",
+        "engineering/retro/agents/openai.yaml": "cb6fb9d7e6b4be5975f41f6def1dd00a1255bad5d9b02696b124c924a8b8745c",
+        "engineering/setup-matt-pocock-skills/SKILL.md": "b01e05bfe8c323171275c6ceec78b12f1bd4c62dfd26c2cfe8be806d3883f1ed",
+        "engineering/setup-matt-pocock-skills/agents/openai.yaml": "9527de0110541c45712319025155aeab8dc7d77c6ed6e5e83271bab1851ab939",
+        "engineering/setup-matt-pocock-skills/domain.md": "593a7042218689f1d24df89df14eaf0a20e19e0d0a7d479a01947ac78f0784b9",
+        "engineering/setup-matt-pocock-skills/issue-tracker-github.md": "6fdb3e9b00b7b0b115ecac3b1c00e3790f637f190abf598815368722c0a94692",
+        "engineering/setup-matt-pocock-skills/issue-tracker-gitlab.md": "947602d33a80f98f939fb990995b8f95a3459b114b919c4221d08bd75d7cffe0",
+        "engineering/setup-matt-pocock-skills/issue-tracker-local.md": "7dcda20a2eb4bdc89b95d1143423c0691309921cadae3132e6424f371030506e",
+        "engineering/setup-matt-pocock-skills/triage-labels.md": "ae512af838c78b8750471c42cd2b20fa32319553e61d84c9a23d171b40ce14aa",
+        "engineering/to-spec/SKILL.md": "43ad9cf318e5e7d3d1fa360253a37021796dc87a0c2e595ad262661a10f85088",
+        "engineering/to-spec/agents/openai.yaml": "1c5b4d1e3d8e52287ef19cc2742fdbbfae1914ac75d33af3e4c8174f08cc55bb",
+        "engineering/to-tickets/SKILL.md": "56ec23c5b2782785d4e65bff9e315b6d3aeb4ef977c174a219e99489fada1995",
+        "engineering/to-tickets/agents/openai.yaml": "21bc6215fffcd7614e9f772bb1760e87cc5fc7dcc707e7d282bc9414267a6090",
+        "engineering/triage/AGENT-BRIEF.md": "7f5f87fed3033df1b06e083c480f3e847b1fbb0647746b8a4c6a50f9f26ef44f",
+        "engineering/triage/OUT-OF-SCOPE.md": "1fbf9b432130c6380aa65813b55553cfda150309b27c595e183f8e335b8a190d",
+        "engineering/triage/SKILL.md": "917b0baf74be583e74f110857ed45df2766617f75c00baf61fd136d7af515edf",
+        "engineering/triage/agents/openai.yaml": "2e683717720cf456d165d0bb1a68bb600d0b6a8ccb61841c172e50d26f95351c",
+        "engineering/wayfinder/SKILL.md": "0c9fa96791aebf3b7d654cf35c6aadde97d81f57c17b07d13b27c14d9c46561f",
+        "engineering/wayfinder/agents/openai.yaml": "88bc81a11a6d52ac67aeaa76b8b619e387020d47c5133a4dd4927fd15c4ad073",
+        "engineering/wizard/SKILL.md": "bdf31d48211ea559878f95a4f344aeabf8d85897488ba564382bab0b000daac1",
+        "engineering/wizard/agents/openai.yaml": "98f44d682d58e262f160dc59a8befc365e0aa65820dd0261864af26aa8e59d83",
+        "engineering/wizard/template.sh": "6566f147299bc6f1d941e64591ed04385416d543e11f96f564c7228f5018d0ed",
+        "productivity/grill-me/SKILL.md": "caaf8b8de1684f96e26b28f3c29189db5c89cce4b73e1c93d86164f66ef88637",
+        "productivity/grill-me/agents/openai.yaml": "c061e39c3e0f9d865fb1b97556d485704af2a8a58f4b8221a8917a5c2074a32b",
+        "productivity/grilling/SKILL.md": "a146842ed93ca43d833550fa9adf02e58cb63c83fea9d4b4522995b82242d4e2",
+        "productivity/grilling/agents/openai.yaml": "1411d7df7d99b7e621a1ff8283c8133cc2464be63d064e52d8ce169c6800ee9b",
+        "productivity/handoff/SKILL.md": "4cbb043950dad2ffd3662ff1a5a0b51ae676004b5cae10e3787e8ee7a4ee69d3",
+        "productivity/handoff/agents/openai.yaml": "5c479fd562c691851690e8b18c8501045bef0943c10743d636b2fae26add1d28",
+        "productivity/teach/GLOSSARY-FORMAT.md": "9b99859ec28437668130d8f2ce5a342938970f8a1ed4fd38c3eab4f4b5fff210",
+        "productivity/teach/LEARNING-RECORD-FORMAT.md": "701fa34b6748aa89e6c960ffb815257f481a7d77fb2900f9028f7edf3fdd6052",
+        "productivity/teach/MISSION-FORMAT.md": "8cacbb3c0644d3ae0ea4965564797099401a6930a23f7cf462918576587f2418",
+        "productivity/teach/RESOURCES-FORMAT.md": "e9cacf34026e11a8d1c8f9de88abe5bcbf654f4ebdb25cae8c0de0d5f48f44ec",
+        "productivity/teach/SKILL.md": "550482c2d674b085c9043b87bfdc14a8f2ec453c736119e7fcbb1e9332bffeba",
+        "productivity/teach/agents/openai.yaml": "5856f3ae8aec742f1499c640aecdd5f1d6af5fa210a7c6ec794de8263a6f733f",
+        "productivity/to-questionnaire/SKILL.md": "b5eb929842ee0e93d867c5e906d183d350f2f2d149eaeaa86967d94d8eda1d3b",
+        "productivity/to-questionnaire/agents/openai.yaml": "9e8a06c38c8842eea8d4922cb9d1ead8e3ace647bab259b943c994a1b4742bc2",
+        "productivity/wait-what/SKILL.md": "d961bb37defd975c539427edb8f450cdbccdcdd552e213c1ece46676a7970905",
+        "productivity/wait-what/agents/openai.yaml": "b41faadf741d51e4ea184148b2d1854d93f947aaf754c7844f70a00f04194999",
+        "productivity/writing-for-agents/SKILL-MECHANICS.md": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059",
+        "productivity/writing-for-agents/SKILL.md": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a",
+        "productivity/writing-for-agents/agents/openai.yaml": "eacb24b2a618cfb81dacb0416f4fdd75ddf3a8060f8ddb99aae1b1e301907e4b"
+      },
+      "include": [
+        {
+          "from": "skills/engineering/ask-matt",
+          "to": "engineering/ask-matt"
+        },
+        {
+          "from": "skills/engineering/code-review",
+          "to": "engineering/code-review"
+        },
+        {
+          "from": "skills/engineering/codebase-design",
+          "to": "engineering/codebase-design"
+        },
+        {
+          "from": "skills/engineering/diagnosing-bugs",
+          "to": "engineering/diagnosing-bugs"
+        },
+        {
+          "from": "skills/engineering/domain-modeling",
+          "to": "engineering/domain-modeling"
+        },
+        {
+          "from": "skills/engineering/grill-with-docs",
+          "to": "engineering/grill-with-docs"
+        },
+        {
+          "from": "skills/engineering/implement",
+          "to": "engineering/implement"
+        },
+        {
+          "from": "skills/engineering/implement-spec",
+          "to": "engineering/implement-spec"
+        },
+        {
+          "from": "skills/engineering/improve-codebase-architecture",
+          "to": "engineering/improve-codebase-architecture"
+        },
+        {
+          "from": "skills/engineering/pr",
+          "to": "engineering/pr"
+        },
+        {
+          "from": "skills/engineering/prototype",
+          "to": "engineering/prototype"
+        },
+        {
+          "from": "skills/engineering/research",
+          "to": "engineering/research"
+        },
+        {
+          "from": "skills/engineering/retro",
+          "to": "engineering/retro"
+        },
+        {
+          "from": "skills/engineering/setup-matt-pocock-skills",
+          "to": "engineering/setup-matt-pocock-skills"
+        },
+        {
+          "from": "skills/engineering/to-spec",
+          "to": "engineering/to-spec"
+        },
+        {
+          "from": "skills/engineering/to-tickets",
+          "to": "engineering/to-tickets"
+        },
+        {
+          "from": "skills/engineering/triage",
+          "to": "engineering/triage"
+        },
+        {
+          "from": "skills/engineering/wayfinder",
+          "to": "engineering/wayfinder"
+        },
+        {
+          "from": "skills/engineering/wizard",
+          "to": "engineering/wizard"
+        },
+        {
+          "from": "skills/productivity/grill-me",
+          "to": "productivity/grill-me"
+        },
+        {
+          "from": "skills/productivity/grilling",
+          "to": "productivity/grilling"
+        },
+        {
+          "from": "skills/productivity/handoff",
+          "to": "productivity/handoff"
+        },
+        {
+          "from": "skills/productivity/teach",
+          "to": "productivity/teach"
+        },
+        {
+          "from": "skills/productivity/to-questionnaire",
+          "to": "productivity/to-questionnaire"
+        },
+        {
+          "from": "skills/productivity/wait-what",
+          "to": "productivity/wait-what"
+        },
+        {
+          "from": "skills/productivity/writing-for-agents",
+          "to": "productivity/writing-for-agents"
+        }
+      ],
+      "license": "MIT",
+      "notice": [
+        "LICENSE"
+      ],
+      "package": "phi9t-pocock",
+      "path": ".",
+      "repository": "https://github.com/mattpocock/skills",
+      "version": "1.3.2"
+    },
+    "pstack": {
+      "commit": "93b916d4a1e806507e22f4716b352fa91f2b227e",
+      "files": {
+        "LICENSE": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e",
+        "agents/poteto-agent.md": "369065b46c217a5898cb1a400652c3399449252f4d5dbf8937eb8d4922d3cf6b",
+        "architect/SKILL.md": "aea83d7aa109eb73402182701b14c289844663ad9c8f959fedbef2df66787ce0",
+        "arena/SKILL.md": "04f79ee8239251bc0c8a9e92f895ebe7bff42e785a5f6ef8ed2dc34dae18e85d",
+        "benchmark-checklist/SKILL.md": "5efd79495e3eebf3b53814861330fe812458212958f8f009492e866c329161f6",
+        "correct/SKILL.md": "e347045d00c967a0b831ef883cc6ac79d21329aa10b5968637df95de7febf0ba",
+        "create-verification-skill/SKILL.md": "b5a1f6fdea50a30e868f869c0d09184e901c6a0cd833a12a45ca1296fce81bde",
+        "create-verification-skill/references/feature-map-example/README.md": "cb7bd782cf89968a4ba3d58a5151db837430db92d19a6f52a906973b77b516ba",
+        "create-verification-skill/references/feature-map-example/create-note.md": "644a44c74f35d38c2feb7cd05a0121fdebbb623e8dc376c185b565a581d1ccf7",
+        "create-verification-skill/references/feature-map-example/search.md": "6e87b9e7f2791a7776ba1bb83f371cd285c306c67f19d245cc4dd6ca3015c823",
+        "figure-it-out/SKILL.md": "30693f2510b111128a6bae0d0ac35f97d972a30c0b84364dc87290b9fdc3b699",
+        "how/SKILL.md": "23d5cc79a449b9838242e7af5563aa8a4f0417bab136bbcc054b4bebc7284680",
+        "in-your-own-words/SKILL.md": "fa8ba74e27d7be371dc270ec78bbf816411477d0dfab185356c861ac8dd413ad",
+        "interrogate/SKILL.md": "3f3c2e9b8cf6b180dba9f32a4aff85e5691b09805232468e37a0ba45437a9984",
+        "maintain-verification-skill/SKILL.md": "515c0eaa054b3f6be1b1fb06f2c2f173c80fddb58bbcac57576f89c479bc68e8",
+        "no-comments/SKILL.md": "054a46f2662c725add02d9e0440d8dcb4351f3bd0afcf797acc22a501b527b54",
+        "poteto-mode/SKILL.md": "67fd2c54fd25ebfae1e46db62c4b2e54f806a7ea9dfb6c83922de37e9b9635ea",
+        "poteto-mode/playbooks/authoring-a-skill.md": "f6a13a445c360b48d6cd72780ac01955f45b82826476efe0e67c7559329407aa",
+        "poteto-mode/playbooks/autonomous-run.md": "613c7b3079779ecfa27e1fb41a082711b5a1207e720b87f75c3aaa9b25aac480",
+        "poteto-mode/playbooks/autopilot-full.md": "2a8856b7e11590f6faba87c11520e0a20f46c78dbfdaac5eceab48ea308bf787",
+        "poteto-mode/playbooks/autopilot-stack.md": "3dc6961df12a74a917571c21de482b42939b728cb4879d1852c51fd9fbabd152",
+        "poteto-mode/playbooks/babysit.md": "06fed1fa997c8899d7365fb0f21c0177084fcb8d0561841d2eca753660f63a85",
+        "poteto-mode/playbooks/bug-fix.md": "eef68686ea0128d36979c39ce88f5cd5c248eb4e58f1ca3229692b9902961170",
+        "poteto-mode/playbooks/eval.md": "369bfda8bf305fb57bf4cabada7862c41dc21f1dc0ad7993cfcd29d0a4d99a68",
+        "poteto-mode/playbooks/feature.md": "beb7b527049eab12052deac8a32e6ee7f6cf26e7ebffb3c3f5d6cead1ec7df7e",
+        "poteto-mode/playbooks/hillclimb.md": "a1d71e026d648991646533539939641f33508d5a02340f5041482ddd58116216",
+        "poteto-mode/playbooks/investigation.md": "1009fdb6596a9c06cb93e224ec86bfb60226f2c603474c968a4f2c2983e96a69",
+        "poteto-mode/playbooks/multi-phase-plan.md": "98e0ed1acc5410fd23ed52cc399346c7c3f83f9f6f7068f8cc52d95ff84ab653",
+        "poteto-mode/playbooks/opening-a-pr.md": "a14cf04833cd6a3eb899fb8814759c937294d0faa3da1ef09d568f45002026b4",
+        "poteto-mode/playbooks/pause-safely.md": "77968cfe5f4a71a8cd33e0ae8ffcdbd88dd693a212c240457773e6c40c96c21d",
+        "poteto-mode/playbooks/perf-issue.md": "0eb3130e34798cdc0971eb1b3582856cb81023ccab0abeb64301458660be15a1",
+        "poteto-mode/playbooks/prototype.md": "7aa1f52c691c3d46d5afc527b23f90977fce869ce33573c73c81a4c7f0cde962",
+        "poteto-mode/playbooks/refactoring.md": "f11ff3c3ff0ea09d3ce2db0a3c11be3a3c11c279c04b83324723d0e0f984755b",
+        "poteto-mode/playbooks/runtime-forensics.md": "79634d9bbc1a6fef3fa5c852c1c723d525f7fab45568e9637121e4afc058405f",
+        "poteto-mode/playbooks/session-pickup.md": "15a6b61eeb89e2dd66ab8254f7c6807694a06eb103342983a7620f10c942ecf9",
+        "poteto-mode/playbooks/shipping.md": "486a6211859eeacfc9a85c7a9d2632b7dddecad189a6b2551212ef274ef1d85c",
+        "poteto-mode/playbooks/trace-forensics.md": "a2d5e20b544835755407b9bdd945e2b595d2e5f826b44c438cbadf92e7efd797",
+        "poteto-mode/playbooks/visual-parity.md": "950ca51999a6454c98eee6bcbc3d1bbe501a4e3a5d5439b6f6ddc378991b256c",
+        "poteto-mode/playbooks/worktree-cleanup.md": "2d4d3dcc9e4ddff4770c5f2a254c7915e6bbed968861cfa0c3c45bd04f99b3a5",
+        "poteto-mode/references/bugbot-triage.md": "b2d146c770d8d3593e1ef3d77b668039b8e1f78093ea1a86f1d45d7f99614309",
+        "poteto-mode/scripts/bootstrap.ts": "ccd2ed08fd9da9d0d942e5f2491cfc74bb92d8a08fa51755e0da1ac8de287361",
+        "poteto-mode/scripts/bun.lock": "667d9cf7222e9aae3fa42a4be383e657784216e9df115da02227fbc5ac7bbe46",
+        "poteto-mode/scripts/package.json": "0b7aa62edc524bf9d3f735b17f10ab7fea22797b80b7edc4a91620a570332d13",
+        "poteto-mode/scripts/watch-pr/cli.test.ts": "a35592b4c6da96caf8d47987e9cd503fab6c7774ab87d11a43f24b4b5df2a9d1",
+        "poteto-mode/scripts/watch-pr/cli.ts": "89c08863089181a232be782c4b2ed90a1552f44aeecb0dcb7aac2c623620e680",
+        "poteto-mode/scripts/watch-pr/fakes.test-helper.ts": "cf0c5ee61b4a73444c1b775cfb6c81a40d312e055dd21a1f5eae6276e54de13f",
+        "poteto-mode/scripts/watch-pr/github.test.ts": "9d9f644388f3516364d47f5eb96c1f977dd6f560bd6005b660d90d3b367cf4b9",
+        "poteto-mode/scripts/watch-pr/github.ts": "7ba193190d488c8ce0982c85234ebea026e9a595703e99a3c3df0fcd640ddd18",
+        "poteto-mode/scripts/watch-pr/policy.test.ts": "7ee38c20ed605f4a255f1f78e5a4be56b3563fcd8d3d65cfeea58d44c3f58d53",
+        "poteto-mode/scripts/watch-pr/policy.ts": "2d4823aeea788acab258ec60eb52e7b9e3a23a6649850af128d6ada5c33d7778",
+        "poteto-mode/scripts/watch-pr/render.ts": "2b709e86628d5b8fdb61f860e60ababc342b0626c67576305442cf548283a604",
+        "poteto-mode/scripts/watch-pr/tsconfig.json": "1ecccc72320b086c63ce3f73c959896fd747363e63553b3b1136296ea4069e45",
+        "poteto-mode/scripts/watch-pr/types.compile.ts": "621af4c9a664fbf699a9737efccdc248abb416df8819c9dc5f824beae2b9b1d6",
+        "poteto-mode/scripts/watch-pr/types.ts": "daa66c56220bae084c18cc6d3b0a2c66c0e72206d298e40973b44ee085ce16d2",
+        "poteto-mode/scripts/watch-pr/watch-pr": "d955603be6cc0e8b8ffcec722f635192b2261410b1f2929abea94480e47eb5d4",
+        "poteto-mode/scripts/worktree-audit.sh": "06be04b38346ded24ce761d373726f98cd9b9737f20ec98214e88b5f08f521b8",
+        "poteto-mode/worker.md": "d051060527ab1649fb1e69d1e7d416950264f9955c3de3635c0d63569f1b90d8",
+        "principle-attack-the-premise/SKILL.md": "831e916c540f4b6b720b7472aeea6e6ef93996655e36cc2517221f6f2081b480",
+        "principle-boundary-discipline/SKILL.md": "c02c26cca3906bfd57829535f8fa7ee9e00df037b4dbb24e5f85ec9e12710b48",
+        "principle-build-the-lever/SKILL.md": "753d81cf9ca2a4e9d1f057429f0c63c9c622e6022dd877ec97ec15f442076aac",
+        "principle-encode-lessons-in-structure/SKILL.md": "228963799189f481827d6f28065f278bc2008ffa37030b1234cbd5814d36b9e9",
+        "principle-exhaust-the-design-space/SKILL.md": "2de83d99f93f60ec6313455b0bc9aa9f0bfb93dd59f414f403691322db00d4db",
+        "principle-experience-first/SKILL.md": "58903529d733b1c1a7c9ccf127d45ef3c7d0d9f0b81164a4dc6b80efe6f2912b",
+        "principle-explain-the-number/SKILL.md": "e6a3f00991f4949cf18a0b5c77dd3126ca4402b8553f88c9c7905e577512676e",
+        "principle-fix-root-causes/SKILL.md": "79afd7e67d8951203231f6f1ccfc7b4a1f30d8d6cdb68e92755c80012414dbeb",
+        "principle-foundational-thinking/SKILL.md": "5c63eecf4b83ea5a99eda7a95a96cac0929d2dce7393d7089c83917bc12cf820",
+        "principle-guard-the-context-window/SKILL.md": "af0b9dd70b43628ce4a59a4d332e9d9ad055084e460f430e7a757495c627e81a",
+        "principle-laziness-protocol/SKILL.md": "1be6e7a435f26a75a76eb848b9c3d611b9977d0f5822361753244da25ca3ca45",
+        "principle-make-operations-idempotent/SKILL.md": "76ad0a99b6ff2a05a159accfeee48412d62f62774eb8d05bbff26a1f3aa3eab5",
+        "principle-migrate-callers-then-delete-legacy-apis/SKILL.md": "580ad9bb1a0994ecb924321ba49efc38a2f85c64e22c76fb133f57a78272a2e6",
+        "principle-minimize-reader-load/SKILL.md": "22d27deffb0a3726858d0d4b02d71acd4a3eb4d44e218bc89b66e49dc9823937",
+        "principle-model-the-domain/SKILL.md": "97c6214dc6a18b93177dda6429185a8640878b36ddee6ec9400c23a0eb9be2d8",
+        "principle-never-block-on-the-human/SKILL.md": "05030a7a083c337676f793881b4e93cd218e8f1dd676529f56e6ac1d3efb8d1f",
+        "principle-outcome-oriented-execution/SKILL.md": "10eb91633aa570355ba4bb37088fcade2b22e498df7a58edc749e65bc5a78e2d",
+        "principle-prove-it-works/SKILL.md": "3d6c482e341974cfcb8d19ebf66fb1d4274d8673af35e36d3c231a6aa9e03f25",
+        "principle-redesign-from-first-principles/SKILL.md": "170e0a658783e43fee8ec5a8c2422a4abb8f69cef621dd1819a95910b8207034",
+        "principle-separate-before-serializing-shared-state/SKILL.md": "2e5625d686b657e0b607c329fd8043bf50261b808239308fe4c6776e2817e95a",
+        "principle-sequence-verifiable-units/SKILL.md": "ab0cc331cf317c07bb0ed6dd13ee9f618338b36e4e851521977bc5c4a8d429e1",
+        "principle-subtract-before-you-add/SKILL.md": "8c93bb9d1a7f38e2ef37655d93f0e790fa59903105af3d500cc8a663ebe45f3f",
+        "principle-test-behavior-not-implementation/SKILL.md": "42afc1a2c7176363b6410cfde06a9fd3e96f5022ba86bdb8de4838ad65c2442d",
+        "principle-type-system-discipline/SKILL.md": "9cd1ce345bc9d666c73c64c89c89164217b659aa4c4dde5600cbbe6f6e775461",
+        "reflect/SKILL.md": "6f6952f91514dc86257830da93a446c732a1af906f6acd5e5783dc587a29031e",
+        "show-me-your-work/SKILL.md": "ec29326ac20515f2941198205bec615320a55b21659692e19650530dbf217bde",
+        "show-me-your-work/references/decision-log-template.tsv": "6779378006a2f5225e8c06deb84f1d913fb532041ebbb6e50d94600bfe3f4b76",
+        "show-me-your-work/scripts/log.sh": "a65a4bc5fb7cdeadbdb7b7ff1ca4682f4d9c42420942b2977cd17b46c4ac338e",
+        "swarm/SKILL.md": "8558089df5320e4ddf61126ca3d638404341584c8307dd6d20f8984e5ae3bbd1",
+        "tdd/SKILL.md": "eeb868e2dfebee528d730a67d7b17498fac4bb85dec2e38bc5c5176aca4d5d2f",
+        "technical-writing/SKILL.md": "0a620885599cdde5a0a31fa39878144c10f61c894b56bf4a9ff779496e718b14",
+        "unslop/SKILL.md": "2b823fd069e031c1420180be8e0d4f5e2fd25bf2c428049e5c835c59a489b5e0",
+        "why/SKILL.md": "6b65b3180f1f1bd3b696d7933daf900747410c82931d220a3f57a98addb1c0fd"
+      },
+      "include": [
+        {
+          "from": "skills/poteto-mode",
+          "to": "poteto-mode"
+        },
+        {
+          "from": "skills/architect",
+          "to": "architect"
+        },
+        {
+          "from": "skills/arena",
+          "to": "arena"
+        },
+        {
+          "from": "skills/benchmark-checklist",
+          "to": "benchmark-checklist"
+        },
+        {
+          "from": "skills/figure-it-out",
+          "to": "figure-it-out"
+        },
+        {
+          "from": "skills/how",
+          "to": "how"
+        },
+        {
+          "from": "skills/why",
+          "to": "why"
+        },
+        {
+          "from": "skills/interrogate",
+          "to": "interrogate"
+        },
+        {
+          "from": "skills/in-your-own-words",
+          "to": "in-your-own-words"
+        },
+        {
+          "from": "skills/no-comments",
+          "to": "no-comments"
+        },
+        {
+          "from": "skills/show-me-your-work",
+          "to": "show-me-your-work"
+        },
+        {
+          "from": "skills/swarm",
+          "to": "swarm"
+        },
+        {
+          "from": "skills/technical-writing",
+          "to": "technical-writing"
+        },
+        {
+          "from": "skills/unslop",
+          "to": "unslop"
+        },
+        {
+          "from": "skills/tdd",
+          "to": "tdd"
+        },
+        {
+          "from": "skills/correct",
+          "to": "correct"
+        },
+        {
+          "from": "skills/reflect",
+          "to": "reflect"
+        },
+        {
+          "from": "skills/principle-attack-the-premise",
+          "to": "principle-attack-the-premise"
+        },
+        {
+          "from": "skills/principle-boundary-discipline",
+          "to": "principle-boundary-discipline"
+        },
+        {
+          "from": "skills/principle-build-the-lever",
+          "to": "principle-build-the-lever"
+        },
+        {
+          "from": "skills/principle-encode-lessons-in-structure",
+          "to": "principle-encode-lessons-in-structure"
+        },
+        {
+          "from": "skills/principle-exhaust-the-design-space",
+          "to": "principle-exhaust-the-design-space"
+        },
+        {
+          "from": "skills/principle-experience-first",
+          "to": "principle-experience-first"
+        },
+        {
+          "from": "skills/principle-explain-the-number",
+          "to": "principle-explain-the-number"
+        },
+        {
+          "from": "skills/principle-fix-root-causes",
+          "to": "principle-fix-root-causes"
+        },
+        {
+          "from": "skills/principle-foundational-thinking",
+          "to": "principle-foundational-thinking"
+        },
+        {
+          "from": "skills/principle-guard-the-context-window",
+          "to": "principle-guard-the-context-window"
+        },
+        {
+          "from": "skills/principle-laziness-protocol",
+          "to": "principle-laziness-protocol"
+        },
+        {
+          "from": "skills/principle-make-operations-idempotent",
+          "to": "principle-make-operations-idempotent"
+        },
+        {
+          "from": "skills/principle-migrate-callers-then-delete-legacy-apis",
+          "to": "principle-migrate-callers-then-delete-legacy-apis"
+        },
+        {
+          "from": "skills/principle-minimize-reader-load",
+          "to": "principle-minimize-reader-load"
+        },
+        {
+          "from": "skills/principle-model-the-domain",
+          "to": "principle-model-the-domain"
+        },
+        {
+          "from": "skills/principle-never-block-on-the-human",
+          "to": "principle-never-block-on-the-human"
+        },
+        {
+          "from": "skills/principle-outcome-oriented-execution",
+          "to": "principle-outcome-oriented-execution"
+        },
+        {
+          "from": "skills/principle-prove-it-works",
+          "to": "principle-prove-it-works"
+        },
+        {
+          "from": "skills/principle-redesign-from-first-principles",
+          "to": "principle-redesign-from-first-principles"
+        },
+        {
+          "from": "skills/principle-separate-before-serializing-shared-state",
+          "to": "principle-separate-before-serializing-shared-state"
+        },
+        {
+          "from": "skills/principle-sequence-verifiable-units",
+          "to": "principle-sequence-verifiable-units"
+        },
+        {
+          "from": "skills/principle-subtract-before-you-add",
+          "to": "principle-subtract-before-you-add"
+        },
+        {
+          "from": "skills/principle-test-behavior-not-implementation",
+          "to": "principle-test-behavior-not-implementation"
+        },
+        {
+          "from": "skills/principle-type-system-discipline",
+          "to": "principle-type-system-discipline"
+        },
+        {
+          "from": "skills/create-verification-skill",
+          "to": "create-verification-skill"
+        },
+        {
+          "from": "skills/maintain-verification-skill",
+          "to": "maintain-verification-skill"
+        },
+        {
+          "from": "agents/poteto-agent.md",
+          "to": "agents/poteto-agent.md"
+        }
+      ],
+      "license": "MIT",
+      "notice": [
+        "LICENSE"
+      ],
+      "package": "phi9t-pstack",
+      "patches": [
+        {
+          "new": "[`references/feature-map-example/`](references/feature-map-example/README.md)",
+          "old": "[`references/feature-map-example/`](references/feature-map-example/)",
+          "path": "create-verification-skill/SKILL.md",
+          "reason": "Directory link would fail packaged-reference validation; point at the example index."
+        }
+      ],
+      "path": "pstack",
+      "repository": "https://github.com/cursor/plugins",
+      "version": "0.15.43"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "after": {
+    ".phi9t/manifest.json": {
+      "data": "ewogICJmaWxlcyI6IHsKICAgICJza2lsbHMvcGhpOXQvU0tJTEwubWQiOiB7CiAgICAgICJtb2RlIjogNDIwLAogICAgICAic2hhMjU2IjogImMwNGU0ZTgxNjBhNWUwOWQyNjhiNGUyYWNmODEwYWI4ZGRiMWM1YmU3NTgzNGNkYTA0ZDg5MzIxMjJlZGFjMDIiCiAgICB9LAogICAgInNraWxscy9waGk5dC9yZWZlcmVuY2VzL2d1aWRlLm1kIjogewogICAgICAibW9kZSI6IDQyMCwKICAgICAgInNoYTI1NiI6ICI0ODlkYjEzZWI2OGExM2RmNzJmYTc1NmFmYzk2NDk1ZTMyZWVlOGUzNjI5NTU4MzIwNjA5YTI1ZjY5NTZiYWQxIgogICAgfSwKICAgICJza2lsbHMvcGhpOXQvc2NyaXB0cy9kcml2ZXIiOiB7CiAgICAgICJtb2RlIjogNDkzLAogICAgICAic2hhMjU2IjogIjkxOGIzOTk0MDM4ZjQ2ZmY4MjMyZGYwZWM3YTQxZjQ4ZmM0YmYxMzM5OTg0Njg1ZjUxMDZhY2E5MTZmZTQ3NDEiCiAgICB9CiAgfSwKICAic2NoZW1hIjogMgp9Cg==",
+      "mode": 384
+    },
+    "skills/phi9t/SKILL.md": {
+      "data": "LS0tCm5hbWU6IHBoaTl0CmRlc2NyaXB0aW9uOiAiVXNlIGZvciBmaXh0dXJlIHdvcmsuIgotLS0KIyBGaXh0dXJlClJlYWQgW2d1aWRlXShyZWZlcmVuY2VzL2d1aWRlLm1kKS4KUnVuIFtkcml2ZXJdKHNjcmlwdHMvZHJpdmVyKS4K",
+      "mode": 420
+    },
+    "skills/phi9t/references/guide.md": {
+      "data": "QSByZWFsIHNpZGVjYXIuCg==",
+      "mode": 420
+    },
+    "skills/phi9t/scripts/driver": {
+      "data": "IyEvYmluL3NoCnByaW50ZiAidmVyaWZpZWQgZml4dHVyZVxuIgo=",
+      "mode": 493
+    }
+  },
+  "before": {
+    ".phi9t/manifest.json": null,
+    "skills/phi9t/SKILL.md": null,
+    "skills/phi9t/references/guide.md": null,
+    "skills/phi9t/scripts/driver": null
+  },
+  "schema": 1,
+  "target": "<TARGET>"
+}

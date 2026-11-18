@@ -1,0 +1,17 @@
+{
+  "files": {
+    "skills/phi9t/SKILL.md": {
+      "mode": 420,
+      "sha256": "c04e4e8160a5e09d268b4e2acf810ab8ddb1c5be75834cda04d8932122edac02"
+    },
+    "skills/phi9t/references/guide.md": {
+      "mode": 420,
+      "sha256": "489db13eb68a13df72fa756afc96495e32eee8e3629558320609a25f6956bad1"
+    },
+    "skills/phi9t/scripts/driver": {
+      "mode": 493,
+      "sha256": "918b3994038f46ff8232df0ec7a41f48fc4bf1339984685f5106aca916fe4741"
+    }
+  },
+  "schema": 2
+}
